@@ -1,16 +1,26 @@
-# React + Vite
+## React Unlimited Reels
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern, mobile-friendly React application that provides an endless, TikTok/Instagram Reels-style vertical video feed. It features infinite scrolling, automatic duplicate video skipping, creator profiles, auto-playing active videos, and an optional hands-free auto-scroll mode.
 
-Currently, two official plugins are available:
+## ✨ Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* **No-Login Required:** Open the app and start watching instantly. No sign-up, sign-in, or OAuth setup needed.
+* **Database-Free Architecture:** Fetches trending data directly from public endpoints via client-side requests.
+* **Unified Infinite Feed:** Seamlessly mixes and loops short-form videos with continuous vertical scrolling.
+* **Auto-Scroll Mode (Hands-free):** Features an **Auto ON/OFF** toggle button that automatically scrolls to the next video as soon as the current one ends.
+---
 
-## React Compiler
+## 📁 Project Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+my-reels-app/
+├── public/
+├── src/
+│   ├── components/
+│   │   └── VideoCard.jsx
+│   ├── services/
+│   │   └── api.js            
+│   ├── App.jsx               
+│   ├── App.css                
+│   └── main.jsx               
+├── package.json
+└── vite.config.js
