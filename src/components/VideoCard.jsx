@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 export default function VideoCard({ video, isActive }) {
   const videoRef = useRef(null);
@@ -21,6 +21,7 @@ export default function VideoCard({ video, isActive }) {
         loop
         playsInline
         controls
+        preload="auto"
       />
       <div className="video-info">
         <p>@{video.author}</p>
