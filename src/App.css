@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -111,5 +111,99 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  color: #aaa;
+} */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* अब पूरा १००% उचाइमा भिडियो आउँछ */
+.video-feed-container {
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+
+.video-feed-container::-webkit-scrollbar {
+  display: none;
+}
+
+.video-card {
+  width: 100%;
+  height: 100vh;
+  scroll-snap-align: start;
+  position: relative;
+  background: #000;
+}
+
+.video-overlay{
+  position: absolute;
+  margin: 15px;
+}
+.video-overlay p{
+  font-size: 12px;
+  color: #fff;
+  background-color: rgba(0,0,0,0.5);
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.reel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-info {
+  position: absolute;
+  bottom: 70px;
+  left: 15px;
+  right: 15px;
+  pointer-events: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  max-width: 80%;
+}
+
+.video-info p {
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #fff;
+}
+
+.video-info span {
+  font-size: 12px;
+  color: #e0e0e0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   color: #aaa;
 }

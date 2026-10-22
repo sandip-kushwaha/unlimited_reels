@@ -14,6 +14,9 @@ export default function VideoCard({ video, isActive }) {
 
   return (
     <div className="video-card">
+      <div className="video-overlay">
+        <p>Unlimited reels</p>
+      </div>
       <video
         ref={videoRef}
         src={video.url}

@@ -1,47 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import TopBar from './components/TopBar';
+import React, { useState, useEffect, useRef } from 'react';
 import VideoCard from './components/VideoCard';
-import { fetchTikTokByCategory } from './services/api';
+import { fetchInfiniteVideos } from './services/api';
 import './App.css';
 
 export default function App() {
-  const [category, setCategory] = useState('dance');
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const isFetchingMore = useRef(false);
 
+  
   useEffect(() => {
-    loadVideos();
-  }, [category]);
+    loadInitialVideos();
+  }, []);
 
-  const loadVideos = async () => {
+  const loadInitialVideos = async () => {
     setLoading(true);
-    setCurrentIndex(0);
-    const data = await fetchTikTokByCategory(category);
-    setVideos(data);
+    const initialData = await fetchInfiniteVideos();
+    setVideos(initialData);
     setLoading(false);
   };
 
+
+  const loadMoreVideos = async () => {
+    if (isFetchingMore.current) return;
+    isFetchingMore.current = true;
+
+    const moreData = await fetchInfiniteVideos();
+    if (moreData.length > 0) {
+      setVideos(prevVideos => [...prevVideos, ...moreData]);
+    }
+    
+    isFetchingMore.current = false;
+  };
+
   const handleScroll = (e) => {
-    const index = Math.round(e.target.scrollTop / e.target.clientHeight);
+    const element = e.target;
+    const index = Math.round(element.scrollTop / element.clientHeight);
+    
     if (index !== currentIndex) {
       setCurrentIndex(index);
+    }
+
+    if (videos.length > 0 && index >= videos.length - 3) {
+      loadMoreVideos();
     }
   };
 
   return (
     <div className="app-container">
-      <TopBar category={category} setCategory={setCategory} />
-
       <div className="video-feed-container" onScroll={handleScroll}>
         {loading ? (
           <div className="loading">videos loading... ⏳</div>
         ) : videos.length === 0 ? (
-          <div className="loading">No videos found!</div>
+          <div className="loading">No videos found.</div>
         ) : (
           videos.map((video, index) => (
             <VideoCard 
-              key={`${video.id}-${index}`} 
+              key={video.uid || `${video.id}-${index}`} 
               video={video} 
               isActive={index === currentIndex} 
             />

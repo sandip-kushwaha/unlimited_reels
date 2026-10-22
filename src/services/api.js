@@ -1,54 +1,52 @@
 
-const removeDuplicates = (videos) => {
-  const seen = new Set();
-  return videos.filter(video => {
-    if (!video.url || seen.has(video.id)) return false;
-    seen.add(video.id);
-    return true;
-  });
-};
-
-// API Rate Limit (531 Error) 
 let lastFetchTime = 0;
 const waitRateLimit = async () => {
   const now = Date.now();
   const timeSinceLast = now - lastFetchTime;
-  if (timeSinceLast < 1200) {
-    await new Promise(resolve => setTimeout(resolve, 1200 - timeSinceLast));
+  if (timeSinceLast < 1300) {
+    await new Promise(resolve => setTimeout(resolve, 1300 - timeSinceLast));
   }
   lastFetchTime = Date.now();
 };
 
-const tempCache = {};
+const REGIONS = ['NP', 'IN'];
 
-export const fetchTikTokByCategory = async (category = 'dance') => {
-  const cacheKey = `tiktok_${category}`;
-  if (tempCache[cacheKey]) return tempCache[cacheKey];
+let backupPool = [];
 
+export const fetchInfiniteVideos = async () => {
   try {
     await waitRateLimit();
     
-    const region = 'IN';
-    const res = await fetch(`https://www.tikwm.com/api/feed/list?region=${region}&count=10`);
+    const randomRegion = REGIONS[Math.floor(Math.random() * REGIONS.length)];
+    
+    const res = await fetch(`https://www.tikwm.com/api/feed/list?region=${randomRegion}`);
     const json = await res.json();
 
-    if (json.code === 0 && json.data) {
-      const formatted = removeDuplicates(
-        json.data.map(item => ({
+    if (json.code === 0 && json.data && json.data.length > 0) {
+      const formatted = json.data
+        .filter(item => item.play)
+        .map(item => ({
+          uid: `${item.video_id}_${Date.now()}_${Math.random()}`,
           id: item.video_id,
           url: item.play,
-          author: item.author?.unique_id || 'tiktok_user',
-          title: item.title || (category === 'dance' ? 'Dance Trend 💃' : 'Funny Video 😂'),
-          source: 'tiktok'
-        }))
-      );
+          author: item.author?.unique_id || 'creator',
+          title: item.title || '',
+        }));
 
       const shuffled = formatted.sort(() => 0.5 - Math.random());
-      tempCache[cacheKey] = shuffled;
+      backupPool = [...backupPool, ...shuffled].slice(-60);
       return shuffled;
     }
   } catch (err) {
-    console.error("TikTok API Error:", err);
+    console.warn("API busy, recycling videos for infinite scroll...");
   }
+
+  //if api is busy, recycle videos for infinite scroll
+  if (backupPool.length > 0) {
+    return backupPool
+      .sort(() => 0.5 - Math.random())
+      .map(v => ({ ...v, uid: `${v.id}_${Date.now()}_${Math.random()}` }));
+  }
+
   return [];
 };
