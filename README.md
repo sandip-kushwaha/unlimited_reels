@@ -1,16 +1,32 @@
-# React + Vite
+## React Unlimited Reels
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern, mobile-friendly React application that provides an endless, TikTok/Instagram Reels-style vertical video feed. It features infinite scrolling, automatic duplicate video skipping, creator profiles, auto-playing active videos, and an optional hands-free auto-scroll mode.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Infinite Vertical Scrolling: Seamlessly load and scroll through endless short-form videos without running out of content.
 
-## React Compiler
+Smart Duplicate Prevention: Uses local storage to keep track of watched video IDs (seen_video_ids) to ensure previously viewed videos are automatically skipped across page refreshes.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Auto-Play & Pause: Only the currently visible (active) video plays automatically, while others pause and reset their timestamps.
 
-## Expanding the Oxlint configuration
+Creator Profile Avatars: Displays the creator's circular profile picture alongside their username and title.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Auto-Scroll Mode (Hands-Free): An optional toggle switch (Auto: ON/OFF) that automatically smoothly scrolls to the next video as soon as the current one finishes playing.
+
+Zero Database Required: Fetches live content dynamically utilizing public video APIs with built-in rate-limiting and fallback support.
+
+## 📁 Project Structure
+
+my-reels-app/
+├── public/
+├── src/
+│   ├── components/
+│   │   └── VideoCard.jsx
+│   ├── services/
+│   │   └── api.js            
+│   ├── App.jsx               
+│   ├── App.css                
+│   └── main.jsx               
+├── package.json
+└── vite.config.js
