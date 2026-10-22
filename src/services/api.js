@@ -19,7 +19,7 @@ export const fetchInfiniteVideos = async () => {
     
     const randomRegion = REGIONS[Math.floor(Math.random() * REGIONS.length)];
     
-    const res = await fetch(`https://www.tikwm.com/api/feed/list?region=${randomRegion}`);
+    const res = await fetch(`https://www.tikwm.com/api/feed/list?region=${randomRegion}&count=5`);
     const json = await res.json();
 
     if (json.code === 0 && json.data && json.data.length > 0) {
@@ -29,6 +29,7 @@ export const fetchInfiniteVideos = async () => {
           uid: `${item.video_id}_${Date.now()}_${Math.random()}`,
           id: item.video_id,
           url: item.play,
+          avatar: item.author?.avatar || 'https://ui-avatars.com/api/?name=User&background=random',
           author: item.author?.unique_id || 'creator',
           title: item.title || '',
         }));

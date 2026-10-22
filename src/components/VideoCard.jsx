@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 export default function VideoCard({ video, isActive }) {
   const videoRef = useRef(null);
@@ -27,7 +27,17 @@ export default function VideoCard({ video, isActive }) {
         preload="auto"
       />
       <div className="video-info">
-        <p>@{video.author}</p>
+        <div className="author-row">
+          <img 
+            src={video.avatar} 
+            alt={video.author} 
+            className="author-avatar" 
+            onError={(e) => {
+              e.target.src = 'https://ui-avatars.com/api/?name=TT&background=fe2c55&color=fff';
+            }}
+          />
+          <p>@{video.author}</p>
+        </div>
         <span>{video.title}</span>
       </div>
     </div>

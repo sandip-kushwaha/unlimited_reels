@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import VideoCard from './components/VideoCard';
 import { fetchInfiniteVideos } from './services/api';
 import './App.css';
