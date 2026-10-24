@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 export default function VideoCard({ video, isActive }) {
   const videoRef = useRef(null);
